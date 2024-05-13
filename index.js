@@ -1,7 +1,17 @@
-const fibonacci = (n) => {
-  const sequence = [0, 1];
-  for (let i = 2; i <= n; i++) {
-    sequence.push(sequence[i - 1] + sequence[i - 2]);
+function decodeString(s) {
+  const stack = [];
+  for (const char of s) {
+    if (char !== "]") stack.push(char);
+    else {
+      let str = "";
+      while (stack.length && stack[stack.length - 1] !== "[")
+        str = stack.pop() + str;
+      stack.pop();
+      let num = "";
+      while (stack.length && !isNaN(stack[stack.length - 1]))
+        num = stack.pop() + num;
+      stack.push(str.repeat(parseInt(num)));
+    }
   }
-  return sequence;
-};
+  return stack.join("");
+}
